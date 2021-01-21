@@ -8,10 +8,18 @@ name: dapr-dev-container
 on:
   push:
     paths:
+      - '.github/**'
       - 'docker/Dockerfile-dev'
   pull_request:
     paths:
+      - '.github/**'
       - 'docker/Dockerfile-dev'
+  workflow_dispatch:
+    inputs:
+      name:
+        description: 'Person to greet'
+        required: true
+        default: 'Mona the Octocat'
 
 jobs:
   build:
@@ -23,11 +31,9 @@ jobs:
       - name: Check out code into the Go module directory
         uses: actions/checkout@v2
       - name: docker login
-        if: github.event_name != 'pull_request'
         run: |
-          docker login -u ${{ secrets.DOCKER_REGISTRY_ID }} -p ${{ secrets.DOCKER_REGISTRY_PASS }}
+          docker login ${{ secrets.DOCKER_REGISTRY }} -u tomkerkhove -p ${{ secrets.DOCKER_REGISTRY_PASS }}
       - name: build dapr-dev-container
         run: make build-dev-container DAPR_REGISTRY=${{ env.DOCKER_REGISTRY }}
       - name: push container
-        if: github.event_name != 'pull_request'
         run: make push-dev-container DAPR_REGISTRY=${{ env.DOCKER_REGISTRY }}

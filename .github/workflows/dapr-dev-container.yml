@@ -8,18 +8,10 @@ name: dapr-dev-container
 on:
   push:
     paths:
-      - '.github/**'
       - 'docker/Dockerfile-dev'
   pull_request:
     paths:
-      - '.github/**'
       - 'docker/Dockerfile-dev'
-  workflow_dispatch:
-    inputs:
-      name:
-        description: 'Person to greet'
-        required: true
-        default: 'Mona the Octocat'
 
 jobs:
   build:

@@ -38,8 +38,6 @@ jobs:
             target_os: linux
           - os: windows-latest
             target_os: windows
-          - os: macOS-latest
-            target_os: darwin
         exclude:
           - os: windows-latest
             target_arch: arm
@@ -109,7 +107,6 @@ jobs:
   publish:
     name: Publish docker image and binaries
     needs: build
-    if: github.event_name != 'pull_request'
     env:
       ARTIFACT_DIR: ./release
       HELM_PACKAGE_DIR: helm
@@ -160,11 +157,6 @@ jobs:
         uses: actions/download-artifact@master
         with:
           name: dapr_windows_amd64
-          path: ${{ env.ARTIFACT_DIR }}
-      - name: download artifacts - dapr_darwin_amd64
-        uses: actions/download-artifact@master
-        with:
-          name: dapr_darwin_amd64
           path: ${{ env.ARTIFACT_DIR }}
       - name: download artifacts - dapr_grafana_dashboards
         uses: actions/download-artifact@master

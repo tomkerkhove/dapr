@@ -222,7 +222,7 @@ jobs:
         if: matrix.target_os != 'darwin'
         run: |
           echo "Build docker multiarch image manifest and push it"
-          make docker-publish DAPR_REGISTRY=ghcr.io/tomkerkhove/dapr-runtime DAPR_TAG=${{ env.REL_VERSION }}
+          make docker-publish DAPR_REGISTRY=ghcr.io/tomkerkhove/daprd DAPR_TAG=${{ env.REL_VERSION }}
       - name: Save release version
         run: |
           mkdir -p ${{ env.ARTIFACT_DIR }}/${{ env.HELM_PACKAGE_DIR }}
